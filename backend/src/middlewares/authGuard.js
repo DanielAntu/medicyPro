@@ -1,0 +1,25 @@
+const User = require("../models/User");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+const secret = process.env.SECRET;
+
+const authGuard = async (req, res, next) => {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+
+    if (!token) {
+        res.status(401).json({ errors: ["Acesso Negado!"] });
+        return;
+    }
+
+    try {
+        const verified = jwt.verify(token, secret);
+        req.user = await User.findById(verified.id).select("-password");
+        next();
+    } catch (error) {
+        res.status(401).json({ errors: ["Token inválido."] });
+    }
+};
+
+module.exports = authGuard;

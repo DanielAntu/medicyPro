@@ -1,0 +1,15 @@
+.footer {
+    height: 180px;
+    background-color: #f5fbe9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer p {
+    font-size: 17px;
+}
+
+.footer span {
+    font-weight: bold;
+}

@@ -8,6 +8,18 @@ const createRevenueValidation = () => {
     ];
 };
 
+const updateRevenueValidations = () => {
+    return [
+        body("weight")
+            .optional()
+            .isString()
+            .withMessage("O peso é obrigatório."),
+        body("age").optional().isString().withMessage("A idade é obrigatória."),
+        body("drops").optional().isString().withMessage("A dose é obrigatória"),
+    ];
+};
+
 module.exports = {
     createRevenueValidation,
+    updateRevenueValidations,
 };

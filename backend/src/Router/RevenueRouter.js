@@ -4,7 +4,10 @@ const router = express.Router();
 // middlewares
 const authGuard = require("../middlewares/authGuard");
 const validate = require("../middlewares/handleValidation");
-const { createRevenueValidation } = require("../middlewares/RevenueValidation");
+const {
+    createRevenueValidation,
+    updateRevenueValidations,
+} = require("../middlewares/RevenueValidation");
 
 // controllers
 const {
@@ -12,6 +15,7 @@ const {
     getUserRevenue,
     getRevenueById,
     deleteRevenue,
+    updateRevenue,
 } = require("../controllers/RevenueController");
 
 router.post(
@@ -24,5 +28,12 @@ router.post(
 router.get("/", authGuard, getUserRevenue);
 router.get("/:id", authGuard, getRevenueById);
 router.delete("/:id", authGuard, deleteRevenue);
+router.put(
+    "/:id",
+    authGuard,
+    updateRevenueValidations(),
+    validate,
+    updateRevenue
+);
 
 module.exports = router;

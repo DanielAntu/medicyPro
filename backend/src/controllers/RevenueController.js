@@ -91,9 +91,50 @@ const deleteRevenue = async (req, res) => {
     }
 };
 
+const updateRevenue = async (req, res) => {
+    const { weight, age, drops } = req.body;
+    const { id } = req.params;
+
+    const reqUser = req.user;
+
+    const revenue = await Revenue.findById(ObjectId(id));
+
+    if (!revenue) {
+        res.status(404).json({ errors: ["Receita não encontrada."] });
+        return;
+    }
+
+    if (!revenue.userId.equals(reqUser._id)) {
+        res.status(422).json({
+            errors: ["Ocorreu um erro, por favor tente novamente mais tarde."],
+        });
+        return;
+    }
+
+    if (weight) {
+        revenue.weight = weight;
+    }
+
+    if (age) {
+        revenue.age = age;
+    }
+
+    if (drops) {
+        revenue.drops = drops;
+    }
+
+    await revenue.save();
+
+    res.status(200).json({
+        revenue,
+        message: "Receita atualizada com sucesso.",
+    });
+};
+
 module.exports = {
     createRevenue,
     getUserRevenue,
     getRevenueById,
     deleteRevenue,
+    updateRevenue,
 };

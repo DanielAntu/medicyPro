@@ -1,23 +1,35 @@
-import styles from './Navbar.module.css'
-import { NavLink, Link } from 'react-router-dom'
+import styles from "./Navbar.module.css";
+import { NavLink, Link } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const Navbar = () => {
-  return (
-    <nav className={styles.navbar}>
-        <h2><Link to='/'>MedicyPro</Link></h2>
-        <ul>
-            <li>
-                <NavLink to='/'>Inicio</NavLink>
-            </li>
-            <li>
-                <NavLink to='/register'>Cadastrar</NavLink>
-            </li>
-            <li>
-                <NavLink to='/login'>Entrar</NavLink>
-            </li>
-        </ul>
-    </nav>
-  )
-}
+    const { auth } = useAuth();
 
-export default Navbar
+    return (
+        <nav className={styles.navbar}>
+            <h2>
+                <Link to="/">MedicyPro</Link>
+            </h2>
+            <ul>
+                {auth ? (
+                    <>
+                        <li>
+                            <NavLink to="/">Inicio</NavLink>
+                        </li>
+                    </>
+                ) : (
+                    <>
+                        <li>
+                            <NavLink to="/register">Cadastrar</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/login">Entrar</NavLink>
+                        </li>
+                    </>
+                )}
+            </ul>
+        </nav>
+    );
+};
+
+export default Navbar;

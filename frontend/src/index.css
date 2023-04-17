@@ -13,6 +13,45 @@ main {
     margin: 0 auto;
 }
 
+.title {
+    color: #adadad;
+    border-bottom: 1px solid #adadad;
+    font-size: 23px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    margin-bottom: 1em;
+    padding: 0.7em;
+    outline: none;
+    border: 1px solid #616161;
+    border-radius: 8px;
+    background-color: #e0e0e0;
+}
+
+input:focus {
+    background-color: #f5fbe9;
+}
+
+.btn {
+    background-color: #6a6e63;
+    color: #fff;
+    font-weight: bold;
+    font-size: 17px;
+    cursor: pointer;
+    border: 2px solid #6a6e63;
+    transition: 0.4s;
+}
+
+.btn:hover {
+    background-color: #fff;
+    color: #6a6e63;
+}
+
 .active {
     background-color: #adadad;
     color: white !important;

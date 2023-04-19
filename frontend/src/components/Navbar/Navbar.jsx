@@ -1,9 +1,20 @@
 import styles from "./Navbar.module.css";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { useDispatch } from "react-redux";
+import { logout, reset } from "../../slice/authSlice";
 
 const Navbar = () => {
     const { auth } = useAuth();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        dispatch(logout());
+        dispatch(reset());
+
+        navigate("/login");
+    };
 
     return (
         <nav className={styles.navbar}>
@@ -15,6 +26,9 @@ const Navbar = () => {
                     <>
                         <li>
                             <NavLink to="/">Inicio</NavLink>
+                        </li>
+                        <li>
+                            <span onClick={handleLogout}>Sair</span>
                         </li>
                     </>
                 ) : (

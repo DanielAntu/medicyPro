@@ -1,8 +1,9 @@
 import styles from "./Auth.module.css";
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { register, reset } from "../../slice/authSlice";
+import Loading from "../../components/Loading/Loading";
 
 const Register = () => {
     const [name, setName] = useState("");
@@ -13,15 +14,22 @@ const Register = () => {
     const { loading, error } = useSelector((state) => state.auth);
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    if (loading) {
-        return <p>Loading...</p>;
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const user = {
+            name,
+            email,
+            password,
+            confirmPassword,
+        };
+
+        dispatch(register(user));
     };
+
+    useEffect(() => {
+        dispatch(reset());
+    }, [dispatch]);
 
     return (
         <div className={styles.auth}>
@@ -33,14 +41,14 @@ const Register = () => {
                     type="text"
                     placeholder="Digite Seu nome"
                     onChange={(e) => setName(e.target.value)}
-                    value={name}
+                    value={name || ""}
                 />
 
                 <input
                     type="email"
                     placeholder="Digite seu E-mail"
                     onChange={(e) => setEmail(e.target.value)}
-                    value={email}
+                    value={email || ""}
                 />
 
                 <input
@@ -48,7 +56,7 @@ const Register = () => {
                     placeholder="Digite sua Senha"
                     autoComplete="off"
                     onChange={(e) => setPassword(e.target.value)}
-                    value={password}
+                    value={password || ""}
                 />
 
                 <input
@@ -56,10 +64,16 @@ const Register = () => {
                     placeholder="Confirme sua Senha"
                     autoComplete="off"
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    value={confirmPassword}
+                    value={confirmPassword || ""}
                 />
 
-                <input type="submit" value="Cadastrar" className="btn" />
+                <Loading
+                    loading={loading}
+                    error={error}
+                    msg={error}
+                    type="error"
+                    btnValue="Cadastrar"
+                />
             </form>
             <p>
                 Já tem conta? <Link to="/login">Clique Aqui</Link>

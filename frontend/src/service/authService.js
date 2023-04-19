@@ -8,7 +8,7 @@ const register = async (data) => {
             .then((res) => res.json())
             .catch((err) => err);
 
-        if (res._id) {
+        if (res.id) {
             localStorage.setItem("usermp", JSON.stringify(res));
         }
 
@@ -18,8 +18,13 @@ const register = async (data) => {
     }
 };
 
+const logout = () => {
+    localStorage.removeItem("usermp");
+};
+
 const authService = {
     register,
+    logout,
 };
 
 export default authService;

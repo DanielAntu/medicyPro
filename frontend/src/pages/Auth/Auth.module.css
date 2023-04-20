@@ -8,20 +8,21 @@
 }
 
 .auth h2 {
+    text-align: center;
     margin-bottom: 1em;
     padding: 0.5em;
 }
 
-p {
+.auth p {
     text-align: center;
 }
 
-p a {
+.auth p a {
     text-decoration: none;
     color: #000;
     font-weight: bold;
 }
 
-p a:hover {
+.auth p a:hover {
     color: #6a6e63;
 }

@@ -10,7 +10,7 @@ import { useAuth } from "./hooks/useAuth";
 
 // pages
 import Home from "./pages/Home/Home";
-import Login from "./pages/auth/Login";
+import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 
 function App() {

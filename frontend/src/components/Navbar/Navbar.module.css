@@ -25,7 +25,8 @@
     cursor: pointer;
 }
 
-.navbar ul li a:hover {
+.navbar ul li a:hover,
+.navbar ul li span:hover {
     color: #616161;
 }
 

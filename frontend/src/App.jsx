@@ -12,6 +12,7 @@ import { useAuth } from "./hooks/useAuth";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
     const { auth, loading } = useAuth();
@@ -29,6 +30,12 @@ function App() {
                         <Route
                             path="/"
                             element={auth ? <Home /> : <Navigate to="/login" />}
+                        />
+                        <Route
+                            path="/profile"
+                            element={
+                                auth ? <Profile /> : <Navigate to="/login" />
+                            }
                         />
                         <Route
                             path="/register"

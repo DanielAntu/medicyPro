@@ -1,0 +1,14 @@
+.home {
+    margin: 1em auto;
+    border: 2px solid #6a6e63;
+    padding: 1em;
+    max-width: 600px;
+    box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.648);
+    border-radius: 8px;
+}
+
+.home h2 {
+    text-align: center;
+    margin-bottom: 1em;
+    padding: 0.8em;
+}

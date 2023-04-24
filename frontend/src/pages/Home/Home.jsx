@@ -10,10 +10,12 @@ const Home = () => {
     const [weight, setWeight] = useState("");
     const [age, setAge] = useState("");
     const [drops, setDrops] = useState("");
+    const [idrops, setIdrops] = useState("");
 
     const { res, rdrops } = useDrops(weight, age);
 
     useEffect(() => {
+        setIdrops(rdrops.toString());
         setDrops(res);
     }, [res]);
 
@@ -29,12 +31,14 @@ const Home = () => {
         const revenue = {
             weight,
             age,
-            drops: rdrops,
+            drops: idrops,
         };
 
         dispatch(createRevenue(revenue));
 
         resetMessage();
+        setWeight("");
+        setAge("");
     };
 
     return (
@@ -47,13 +51,21 @@ const Home = () => {
                         placeholder="Seu peso"
                         onChange={(e) => setWeight(e.target.value)}
                         value={weight}
+                        required
                     />
                     <input
                         type="number"
                         placeholder="Sua idade"
                         onChange={(e) => setAge(e.target.value)}
                         value={age}
+                        required
                     />
+                    <input
+                        type="hidden"
+                        onChange={(e) => setIdrops(e.target.value)}
+                        defaultValue={idrops}
+                    />
+
                     {!loading && (
                         <input
                             className="btn"
@@ -74,7 +86,6 @@ const Home = () => {
                     <h3>{drops}</h3>
                 </form>
             </div>
-            <div className="revenue hide"></div>
         </div>
     );
 };

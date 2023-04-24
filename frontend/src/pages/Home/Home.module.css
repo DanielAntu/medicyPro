@@ -12,3 +12,11 @@
     margin-bottom: 1em;
     padding: 0.8em;
 }
+
+.home h3 {
+    text-align: center;
+    padding: 1em;
+    background-color: #6a6e63;
+    color: white;
+    border-radius: 8px;
+}

@@ -25,6 +25,17 @@ export const createRevenue = createAsyncThunk(
     }
 );
 
+export const getUserRevenue = createAsyncThunk(
+    "revenue/getUserRevenue",
+    async (_, thunkApi) => {
+        const token = thunkApi.getState().auth.user.token;
+
+        const data = await revenueService.getUserRevenue(token);
+
+        return data;
+    }
+);
+
 export const revenueSlice = createSlice({
     name: "revenue",
     initialState,
@@ -51,6 +62,21 @@ export const revenueSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
                 state.revenue = {};
+            })
+            .addCase(getUserRevenue.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getUserRevenue.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+                state.revenues = action.payload;
+            })
+            .addCase(getUserRevenue.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+                state.revenues = {};
             });
     },
 });

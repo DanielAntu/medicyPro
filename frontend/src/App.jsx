@@ -13,6 +13,7 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Profile from "./pages/Profile/Profile";
+import Revenues from "./pages/Revenue/Revenues";
 
 function App() {
     const { auth, loading } = useAuth();
@@ -35,6 +36,12 @@ function App() {
                             path="/profile"
                             element={
                                 auth ? <Profile /> : <Navigate to="/login" />
+                            }
+                        />
+                        <Route
+                            path="/revenues"
+                            element={
+                                auth ? <Revenues /> : <Navigate to="/login" />
                             }
                         />
                         <Route

@@ -1,0 +1,59 @@
+.revenue {
+    border: 2px solid #e0e0e0;
+    padding: 1rem;
+    margin: 1rem 0;
+    box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.648);
+}
+
+.revenue h2 {
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #e0e0e0;
+    padding: 0.8rem;
+    font-weight: bold;
+    align-items: center;
+}
+
+.body {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #e0e0e0;
+    padding: 0.8rem;
+    align-items: center;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.8rem;
+    font-size: 1.4rem;
+    align-items: center;
+}
+
+.actions svg {
+    cursor: pointer;
+    color: #888787;
+}
+
+.actions a svg:nth-child(1):hover {
+    color: #000;
+}
+
+.actions a svg:nth-child(2):hover {
+    color: #e0f124;
+}
+
+.actions svg:nth-child(3):hover {
+    color: #ff0000;
+}
+
+.not {
+    text-align: center;
+    font-size: 1.3rem;
+}

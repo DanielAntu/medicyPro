@@ -36,6 +36,21 @@ export const getUserRevenue = createAsyncThunk(
     }
 );
 
+export const deleteRevenue = createAsyncThunk(
+    "revenue/deleteRevenue",
+    async (id, thunkApi) => {
+        const token = thunkApi.getState().auth.user.token;
+
+        const data = await revenueService.deleteRevenue(id, token);
+
+        if (data.errors) {
+            return thunkApi.rejectWithValue(data.errors);
+        }
+
+        return data;
+    }
+);
+
 export const revenueSlice = createSlice({
     name: "revenue",
     initialState,
@@ -77,6 +92,24 @@ export const revenueSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
                 state.revenues = {};
+            })
+            .addCase(deleteRevenue.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(deleteRevenue.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+                state.revenues = state.revenues.filter((rev) => {
+                    return rev._id !== action.payload.id;
+                });
+                state.message = action.payload.message;
+            })
+            .addCase(deleteRevenue.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+                state.revenue = {};
             });
     },
 });

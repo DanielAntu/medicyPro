@@ -1,28 +1,51 @@
 import { api, requestConfig } from "../utils/config";
 
 const createRevenue = async (data, token) => {
-    const config = requestConfig("POST", data, token);
+    try {
+        const config = requestConfig("POST", data, token);
 
-    const res = await fetch(api + "/revenue/create", config)
-        .then((res) => res.json())
-        .catch((err) => err);
+        const res = await fetch(api + "/revenue/create", config)
+            .then((res) => res.json())
+            .catch((err) => err);
 
-    return res;
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 const getUserRevenue = async (token) => {
     const config = requestConfig("GET", null, token);
 
-    const res = await fetch(api + "/revenue/", config)
-        .then((res) => res.json())
-        .catch((err) => err);
+    try {
+        const res = await fetch(api + "/revenue/", config)
+            .then((res) => res.json())
+            .catch((err) => err);
 
-    return res;
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const deleteRevenue = async (id, token) => {
+    const config = requestConfig("DELETE", null, token);
+
+    try {
+        const res = await fetch(`${api}/revenue/${id}`, config)
+            .then((res) => res.json())
+            .catch((err) => err);
+
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 const revenueService = {
     createRevenue,
     getUserRevenue,
+    deleteRevenue,
 };
 
 export default revenueService;

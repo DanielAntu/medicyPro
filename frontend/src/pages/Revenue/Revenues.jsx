@@ -1,17 +1,24 @@
 import styles from "./Revenue.module.css";
-import { getUserRevenue } from "../../slice/revenueSlice";
+import { deleteRevenue, getUserRevenue } from "../../slice/revenueSlice";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import {
     BsFillEyeFill,
     BsFillTrash3Fill,
     BsFillPencilFill,
 } from "react-icons/bs";
+import { useResetMessage } from "../../hooks/useResetMessage";
+import Message from "../../components/Message/Message";
 
 const Revenues = () => {
-    const { revenues, loading, error } = useSelector((state) => state.revenue);
+    const { revenues, loading, error, message } = useSelector(
+        (state) => state.revenue
+    );
 
     const dispatch = useDispatch();
+
+    const resetMessage = useResetMessage(dispatch);
 
     const dataFormat = (createdAt) => {
         const datadiv = createdAt.split("T")[0];
@@ -19,6 +26,12 @@ const Revenues = () => {
             timeZone: "UTC",
         });
         return newDate;
+    };
+
+    const handleDelete = (id) => {
+        dispatch(deleteRevenue(id));
+
+        resetMessage();
     };
 
     useEffect(() => {
@@ -30,24 +43,42 @@ const Revenues = () => {
     }
 
     return (
-        <div>
+        <div className={styles.revenue}>
             <h2>Aqui estão suas receitas salva</h2>
-            {revenues &&
+            {revenues.length > 0 && (
+                <div className={styles.header}>
+                    <p>Criação</p>
+                    <p>Peso</p>
+                    <p>Idade</p>
+                    <p>Doses</p>
+                    <p>ações</p>
+                </div>
+            )}
+            {revenues.length > 0 &&
                 revenues.map((rev) => (
-                    <div key={rev._id}>
+                    <div className={styles.body} key={rev._id}>
                         <p>{dataFormat(rev.createdAt)}</p>
                         <p>{rev.weight}</p>
                         <p>{rev.age}</p>
                         <p>{rev.drops}</p>
-                        <p>{rev.userName}</p>
-                        <div className="actions">
-                            <BsFillEyeFill />
-                            <BsFillPencilFill />
-                            <BsFillTrash3Fill />
+                        <div className={styles.actions}>
+                            <Link to={`/revenue/${rev._id}`}>
+                                <BsFillEyeFill />
+                            </Link>
+                            <Link to={`/edit/${rev._id}`}>
+                                <BsFillPencilFill />
+                            </Link>
+                            <BsFillTrash3Fill
+                                onClick={() => handleDelete(rev._id)}
+                            />
                         </div>
                     </div>
                 ))}
-            {!revenues && <p>Ainda não existe receita salva</p>}
+            {revenues.length === 0 && (
+                <p className={styles.not}>Ainda não existe receita salva</p>
+            )}
+            {error && <Message msg={error} type="error" />}
+            {message && <Message msg={message} type="success" />}
         </div>
     );
 };

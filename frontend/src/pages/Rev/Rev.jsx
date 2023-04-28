@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useFormatData } from "../../hooks/useFormatData";
 
 // redux
 import { getRevenuebyId, resetMessages } from "../../slice/revenueSlice";
@@ -18,8 +17,6 @@ const Rev = () => {
     const { revenue, loading } = useSelector((state) => state.revenue);
 
     const dispatch = useDispatch();
-
-    const formatData = useFormatData();
 
     useEffect(() => {
         dispatch(getRevenuebyId(id));
@@ -32,15 +29,14 @@ const Rev = () => {
     }
 
     return (
-        <div>
+        <div className={styles.rev}>
             <h2>Receituario</h2>
-            <div>
-                <p>Data: {formatData(revenue.createdAt)}</p>
+            <div className={styles.title}>
                 <p>Nome: {revenue.userName}</p>
             </div>
-            <p>Peso: {revenue.weight}</p>
-            <p>Age: {revenue.age}</p>
-            <p>Dose: {revenue.drops}</p>
+            <p>Peso: {revenue.weight} kg</p>
+            <p>Age: {revenue.age} anos</p>
+            <p>Dose: {revenue.drops} gotas</p>
             <p>Tome remédios apenas prescrição medica</p>
             <Link to="/revenues" className="btn">
                 Voltar

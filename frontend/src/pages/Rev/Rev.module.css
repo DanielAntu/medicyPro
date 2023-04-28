@@ -1,0 +1,30 @@
+.rev {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #ccc;
+    padding: 1em;
+    width: 580px;
+    margin: 2em auto;
+    box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.648);
+    border-radius: 8px;
+}
+
+.rev h2 {
+    text-align: center;
+    padding: 1em;
+    border-bottom: 1px solid #ccc;
+}
+
+.rev p {
+    margin: 1em 0;
+}
+
+.rev a {
+    text-align: center;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+}

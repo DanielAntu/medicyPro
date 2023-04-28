@@ -51,6 +51,17 @@ export const deleteRevenue = createAsyncThunk(
     }
 );
 
+export const getRevenuebyId = createAsyncThunk(
+    "revenue/getRevenuebuId",
+    async (id, thunkApi) => {
+        const token = thunkApi.getState().auth.user.token;
+
+        const data = await revenueService.getRevenuebyId(id, token);
+
+        return data;
+    }
+);
+
 export const revenueSlice = createSlice({
     name: "revenue",
     initialState,
@@ -110,6 +121,16 @@ export const revenueSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
                 state.revenue = {};
+            })
+            .addCase(getRevenuebyId.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getRevenuebyId.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+                state.revenue = action.payload;
             });
     },
 });

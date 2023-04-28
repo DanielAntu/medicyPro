@@ -10,6 +10,7 @@ import {
 } from "react-icons/bs";
 import { useResetMessage } from "../../hooks/useResetMessage";
 import Message from "../../components/Message/Message";
+import { useFormatData } from "../../hooks/useFormatData";
 
 const Revenues = () => {
     const { revenues, loading, error, message } = useSelector(
@@ -20,13 +21,7 @@ const Revenues = () => {
 
     const resetMessage = useResetMessage(dispatch);
 
-    const dataFormat = (createdAt) => {
-        const datadiv = createdAt.split("T")[0];
-        const newDate = new Date(datadiv).toLocaleDateString("pt-BR", {
-            timeZone: "UTC",
-        });
-        return newDate;
-    };
+    const formatData = useFormatData();
 
     const handleDelete = (id) => {
         dispatch(deleteRevenue(id));
@@ -57,7 +52,7 @@ const Revenues = () => {
             {revenues.length > 0 &&
                 revenues.map((rev) => (
                     <div className={styles.body} key={rev._id}>
-                        <p>{dataFormat(rev.createdAt)}</p>
+                        <p>{formatData(rev.createdAt)}</p>
                         <p>{rev.weight}</p>
                         <p>{rev.age}</p>
                         <p>{rev.drops}</p>
@@ -66,7 +61,7 @@ const Revenues = () => {
                                 <BsFillEyeFill />
                             </Link>
                             <Link to={`/edit/${rev._id}`}>
-                                <BsFillPencilFill />
+                                <BsFillPencilFill className={styles.edit} />
                             </Link>
                             <BsFillTrash3Fill
                                 onClick={() => handleDelete(rev._id)}

@@ -56,11 +56,26 @@ const getRevenuebyId = async (id, token) => {
     }
 };
 
+const updateRevenue = async (id, data, token) => {
+    const config = requestConfig("PUT", data, token);
+
+    try {
+        const res = await fetch(`${api}/revenue/${id}`, config)
+            .then((res) => res.json())
+            .catch((err) => err);
+
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 const revenueService = {
     createRevenue,
     getUserRevenue,
     deleteRevenue,
     getRevenuebyId,
+    updateRevenue,
 };
 
 export default revenueService;

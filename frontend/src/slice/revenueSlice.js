@@ -62,6 +62,29 @@ export const getRevenuebyId = createAsyncThunk(
     }
 );
 
+export const updateRevenue = createAsyncThunk(
+    "revenue/updateRevenue",
+    async (revenueData, thunkApi) => {
+        const token = thunkApi.getState().auth.user.token;
+
+        const data = await revenueService.updateRevenue(
+            revenueData.id,
+            {
+                weight: revenueData.weight,
+                age: revenueData.age,
+                drops: revenueData.drops,
+            },
+            token
+        );
+
+        if (data.errors) {
+            return thunkApi.rejectWithValue(data.errors[0]);
+        }
+
+        return data;
+    }
+);
+
 export const revenueSlice = createSlice({
     name: "revenue",
     initialState,
@@ -131,6 +154,32 @@ export const revenueSlice = createSlice({
                 state.success = true;
                 state.error = null;
                 state.revenue = action.payload;
+            })
+            .addCase(updateRevenue.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(updateRevenue.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+                state.revenues.map((rev) => {
+                    if (rev._id === action.payload.revenue._id) {
+                        return (
+                            (rev.weight = action.payload.revenue.weight),
+                            (rev.age = action.payload.revenue.age),
+                            (rev.drops = action.payload.revenue.drops)
+                        );
+                    }
+
+                    return rev;
+                });
+                state.message = action.payload.message;
+            })
+            .addCase(updateRevenue.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+                state.revenue = {};
             });
     },
 });
